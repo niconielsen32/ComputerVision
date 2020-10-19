@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
   (void)argv;
 
   std::vector<cv::String> fileNames;
-  cv::glob("/home/nicolai/computerVision/exercise6/calibration/calibration/Image*.png", fileNames, false);
+  cv::glob("../calibration/Image*.png", fileNames, false);
   cv::Size patternSize(25 - 1, 18 - 1);
   std::vector<std::vector<cv::Point2f>> q(fileNames.size());
 
