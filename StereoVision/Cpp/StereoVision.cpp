@@ -31,7 +31,7 @@ void StereoVision::undistortFrame(Mat& frame) {
 
 
 
-Mat StereoVision::add_HSV_filter(Mat& frame) {
+Mat StereoVision::add_HSV_filter(Mat& frame, int camera) {
 
 	// Blurring the frame to reduce noise
 	GaussianBlur(frame, frame, { 5,5 }, 0);
@@ -39,17 +39,28 @@ Mat StereoVision::add_HSV_filter(Mat& frame) {
 	// Convert to HSV
 	cvtColor(frame, frame, COLOR_BGR2HSV);
 
-	vector<int> lowerLimitRed = { 143,112,53 };     // Lower limit for red ball
-	vector<int> upperLimitRed = { 255,255,255 };	 // Upper limit for red ball
+
+
+	Mat mask;
+
+	vector<int> lowerLimitRedRight = { 60,110,50 };     // Lower limit for red ball
+	vector<int> upperLimitRedRight = { 255,255,255 };	 // Upper limit for red ball
+	vector<int> lowerLimitRedLeft = { 140,110,50 };     // Lower limit for red ball
+	vector<int> upperLimitRedLeft = { 255,255,255 };	 // Upper limit for red ball
+
+
+	if (camera == 1) {
+		inRange(frame, lowerLimitRedRight, upperLimitRedRight, mask);
+	} else {
+		inRange(frame, lowerLimitRedLeft, upperLimitRedLeft, mask);
+	}
 
 
 	/*vector<int> lowerLimitBlue = { 140,106,0 };     // Lower limit for blue ball
 	vector<int> upperLimitBlue = { 255,255,255 };	 // Upper limit for blue ball
 	*/
 
-	Mat mask;
 
-	inRange(frame, lowerLimitRed, upperLimitRed, mask);
 
 	erode(mask, mask, (3, 3));
 	dilate(mask, mask, (3, 3));
@@ -61,7 +72,7 @@ Mat StereoVision::add_HSV_filter(Mat& frame) {
 
 Point StereoVision::find_ball(Mat& frame, Mat& mask) {
 
-	vector<vector< Point> > contours;
+	vector<vector<Point> > contours;
 
 	findContours(mask, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
@@ -71,6 +82,7 @@ Point StereoVision::find_ball(Mat& frame, Mat& mask) {
 	});
 
 	if (contours.size() > 0) {
+
 		vector<Point> largestContour = contours[contours.size() - 1];
 		Point2f center;
 		float radius;
@@ -87,6 +99,8 @@ Point StereoVision::find_ball(Mat& frame, Mat& mask) {
 
 		return centerPoint;
 	}
+
+	return { 0,0 };
 }
 
 
@@ -113,6 +127,6 @@ float StereoVision::find_depth(Point circleLeft, Point circleRight, Mat& leftFra
 	// Calculate the Depth Z
 	float zDepth = (baseline * float(focal_pixels)) / float(disparity);    // Depth in [cm]
 
-	return zDepth;
+	return abs(zDepth);
 
 }

@@ -47,31 +47,32 @@ int main() {
         capRight.read(rightFrame);
 
         // Calibration of the frames
-        stereovision.undistortFrame(leftFrame);
-        stereovision.undistortFrame(rightFrame);
+        //stereovision.undistortFrame(leftFrame);
+        //stereovision.undistortFrame(rightFrame);
         
         
         // Applying HSV-filter
-        leftMask = stereovision.add_HSV_filter(leftFrame);
-        rightMask = stereovision.add_HSV_filter(rightFrame);
+        leftMask = stereovision.add_HSV_filter(leftFrame, 0);
+        rightMask = stereovision.add_HSV_filter(rightFrame, 1);
 
+        
         // Frames after applyting HSV-filter mask
         bitwise_and(leftFrame, leftFrame, leftResFrame, leftMask);
         bitwise_and(rightFrame, rightFrame, rightResFrame, rightMask);
 
+        
         // Detect Circles - Hough Transforms can be used aswell or some neural network to do object detection
         leftCircle = stereovision.find_ball(leftFrame, leftMask);
         rightCircle = stereovision.find_ball(rightFrame, rightMask);
 
-
+        
 
         // Calculate the depth of the ball
 
-        // If no ball is detected in one of the cameras - show the text "tracking lost"
-        if (!leftCircle.x) {
-            putText(leftFrame, "Tracking Lost in Left Image!", { 75, 50 }, FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2);
-        } else if (!rightCircle.x) {
-            putText(rightFrame, "Tracking Lost in Right Image!", { 75, 50 }, FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2);
+       // If no ball is detected in one of the cameras - show the text "tracking lost"
+        if (!leftCircle.x || !rightCircle.x) {
+            putText(leftFrame, "Tracking Lost", { 75, 50 }, FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2);
+            putText(rightFrame, "Tracking Lost!", { 75, 75 }, FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2);
         } else {
 
             // Vector of all depths in case of several balls detected.
@@ -79,18 +80,19 @@ int main() {
             ballDepth = stereovision.find_depth(leftCircle, rightCircle, leftFrame, rightFrame);
 
             putText(leftFrame, "Tracking!", { 75, 50 }, FONT_HERSHEY_SIMPLEX, 0.7, (125, 250, 0), 2);
-            putText(rightFrame, "Tracking!", { 75, 50 }, FONT_HERSHEY_SIMPLEX, 0.7, (125, 250, 0), 2);
+            putText(rightFrame, "Tracking!", { 75, 75 }, FONT_HERSHEY_SIMPLEX, 0.7, (125, 250, 0), 2);
 
 
             // Multiply computer value with 205.8 to get real - life depth in[cm]. The factor was found manually.
             cout << "Ball depth: " << ballDepth << endl;
-            cout << "Ball depth [cm]: " << ballDepth * 205.8 << endl;
  
         }
 
         // Show the frames
         imshow("Left Frame", leftFrame);
         imshow("Right Frame", rightFrame);
+        imshow("Left Mask", leftMask);
+        imshow("Right Mask", rightMask);
 
         // Hit "q" to close the window
         if ((waitKey(1) & 0xFF) == 'q') {

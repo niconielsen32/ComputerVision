@@ -6,6 +6,7 @@
 #include <opencv2/calib3d.hpp>
 
 #include <iostream>
+#include <string>
 
 
 using namespace std;
@@ -23,7 +24,7 @@ public:
 	void undistortFrame(Mat& frame);
 
 	// Add HSV filter - Filter out / Segment the red ball
-	Mat add_HSV_filter(Mat& frame);
+	Mat add_HSV_filter(Mat& frame, int camera);
 
 	// Find the Cirle/Ball - Only find the largest one - Reduce false positives
 	Point find_ball(Mat& frame, Mat& mask);
