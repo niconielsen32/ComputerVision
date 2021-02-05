@@ -6,7 +6,7 @@ import cv2
 
 def undistorted(frameR, frameL):
 
-    #Load parameters attained from "calib_parameters.py"
+    # Load parameters attained from "calib_parameters.py"
     ret = np.load("./Calibration/camera_params/ret.npy")
     K = np.load("./Calibration/camera_params/K.npy")
     dist = np.load("./Calibration/camera_params/dist.npy")
