@@ -27,9 +27,9 @@ imgpoints = [] # 2d points in image plane.
 
 images = glob.glob('*.png')
 
-for fname in images:
+for image in images:
 
-    img = cv.imread(fname)
+    img = cv.imread(image)
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
     # Find the chess board corners
