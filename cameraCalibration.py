@@ -43,7 +43,7 @@ for image in images:
         imgpoints.append(corners)
 
         # Draw and display the corners
-        cv.drawChessboardCorners(img, (7,6), corners2, ret)
+        cv.drawChessboardCorners(img, chessboardSize, corners2, ret)
         cv.imshow('img', img)
         cv.waitKey(1000)
 
