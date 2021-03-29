@@ -67,7 +67,7 @@ newCameraMatrix, roi = cv.getOptimalNewCameraMatrix(cameraMatrix, dist, (w,h), 1
 
 
 # Undistort
-dst = cv.undistort(img, mtx, dist, None, newcameramtx)
+dst = cv.undistort(img, cameraMatrix, dist, None, newCameraMatrix)
 
 # crop the image
 x, y, w, h = roi
