@@ -55,7 +55,7 @@ cv.destroyAllWindows()
 
 ############## CALIBRATION #######################################################
 
-ret, cameraMatrix, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
+ret, cameraMatrix, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, frameSize, None, None)
 
 
 ############## UNDISTORTION #####################################################
