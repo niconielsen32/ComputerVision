@@ -1,3 +1,6 @@
+// REMEMBER TO ADD THE OPENCV BIN FOLDER TO THE PATH IN ENVIRONMENTAL VARIABLES
+// C:\your_path\opencv\build\install\x64\vc16\bin
+
 #include <iostream>
 #include <opencv2/dnn.hpp>
 #include <opencv2/imgproc.hpp>
