@@ -26,8 +26,8 @@ imgpointsL = [] # 2d points in image plane.
 imgpointsR = [] # 2d points in image plane.
 
 
-imagesLeft = glob.glob('images/stereoLeft/*.png')
-imagesRight = glob.glob('images/stereoRight/*.png')
+imagesLeft = sorted(glob.glob('images/stereoLeft/*.png'))
+imagesRight = sorted(glob.glob('images/stereoRight/*.png'))
 
 for imgLeft, imgRight in zip(imagesLeft, imagesRight):
 
