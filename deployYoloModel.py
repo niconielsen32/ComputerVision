@@ -1,7 +1,6 @@
 import torch
 import numpy as np
 import cv2
-import pafy
 from time import time
 
 
@@ -20,6 +19,7 @@ class ObjectDetection:
         self.model = self.load_model()
         self.classes = self.model.names
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        print("Using Device: ", self.device)
 
     def get_video_capture(self):
         """
