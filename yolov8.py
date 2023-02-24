@@ -26,7 +26,7 @@ class ObjectDetection:
 
     def load_model(self):
        
-        model = YOLO("yolov8m.pt")  # load a pretrained YOLOv8n model
+        model = YOLO("yolov8n.pt")  # load a pretrained YOLOv8n model
         model.fuse()
     
         return model
