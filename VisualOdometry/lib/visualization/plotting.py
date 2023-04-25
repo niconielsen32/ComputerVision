@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 
 from sklearn.metrics import confusion_matrix
 
-from bokeh.models.widgets import Panel, Tabs
+#from bokeh.models.widgets import Panel, Tabs
 from bokeh.io import output_file, show
 from bokeh.plotting import figure, ColumnDataSource
 from bokeh.layouts import column, layout, gridplot
 from bokeh.models import Div, WheelZoomTool
-from bokeh.models.widgets import Panel, Tabs
+#from bokeh.models.widgets import Panel, Tabs
 
 
 def visualize_paths(gt_path, pred_path, html_tile="", title="VO exercises", file_out="plot.html"):
