@@ -123,12 +123,12 @@ class VisualOdometry():
         except ValueError:
             pass
 
-        draw_params = dict(matchColor = -1, # draw matches in green color
-                 singlePointColor = None,
-                 matchesMask = None, # draw only inliers
-                 flags = 2)
+        draw_params = dict(
+            matchesMask = None, # draw only inliers
+            flags = 2
+        )
 
-        img3 = cv2.drawMatches(self.images[i], kp1, self.images[i-1],kp2, good ,None,**draw_params)
+        img3 = cv2.drawMatches(self.images[i-1], kp1, self.images[i],kp2, good ,None,**draw_params)
         cv2.imshow("image", img3)
         cv2.waitKey(200)
 
